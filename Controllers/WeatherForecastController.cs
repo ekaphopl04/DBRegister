@@ -80,5 +80,41 @@ namespace DBRegister.Controllers
             }).ToList();
             return data ;
         }
+        [HttpPut]
+
+        public ActionResult EditUserForDatabase(EditUserForDatabase Value)
+        {  
+            var ChangeTarget = _db.ReportTable.FirstOrDefault(x => x.Id == Value.Id);
+            if(ChangeTarget != null)
+            {
+                ChangeTarget.Name = Value.Name;
+                ChangeTarget.Surname = Value.Surname;
+                _db.ReportTable.Update(ChangeTarget);
+                _db.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        
+        }
+
+        [HttpDelete]
+
+        public ActionResult DeleteUserForDatabase(int Id)
+        {
+            var DeleteTarget = _db.ReportTable.FirstOrDefault(data => data.Id == Id);
+            if(DeleteTarget != null)
+            {
+                _db.ReportTable.Remove(DeleteTarget);
+                _db.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

@@ -23,6 +23,16 @@ namespace DBRegister.Models
         [DataType(DataType.Date)]
          public DateTime Birthday {set ; get ;}
     }
+      public class EditUserForDatabase
+    {
+ 
+        public int Id { set; get; }
+        public string Name { set; get; }
+        public string Surname { set; get; }
+      
+        
+    }
+  
 
 
 }
