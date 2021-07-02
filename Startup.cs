@@ -60,6 +60,6 @@ namespace DBRegister
                 endpoints.MapControllers();
             });
             DbInitializer.Initialize(db);
-        }
+        } 
     }
 }

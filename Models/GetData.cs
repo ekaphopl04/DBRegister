@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace DBRegister.Models
 {
@@ -23,6 +24,7 @@ namespace DBRegister.Models
         [DataType(DataType.Date)]
          public DateTime Birthday {set ; get ;}
     }
+    //แก้ไขชื่อแล้วบันทึกข้อมูล
       public class EditUserForDatabase
     {
  
@@ -32,7 +34,13 @@ namespace DBRegister.Models
       
         
     }
-  
+    //รับค่าอัพโหลดไฟล์
+    public class Upload{
 
+    
+        public IFormFile file { get; set; }
+        public string Json { get; set; } = string.Empty;
+  
+    }
 
 }

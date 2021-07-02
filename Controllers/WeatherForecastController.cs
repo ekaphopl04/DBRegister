@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using DBRegister.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.Extensions.Hosting;
 
 namespace DBRegister.Controllers
 {
@@ -20,11 +24,14 @@ namespace DBRegister.Controllers
 
         private readonly ILogger<DBRegisterController> _logger;
         private readonly ReportContext _db ;
+        private IWebHostEnvironment _hostingEnvironment;
 
-        public DBRegisterController(ILogger<DBRegisterController> logger, ReportContext db)
+
+        public DBRegisterController(ILogger<DBRegisterController> logger, ReportContext db,IWebHostEnvironment environment )
         {
             _logger = logger;
             _db = db ;
+            _hostingEnvironment = environment;
         }
         [HttpPost]
         public ActionResult PostForDatabase(GetData Value){
@@ -99,6 +106,26 @@ namespace DBRegister.Controllers
             }
         
         }
+        //อัพโหลดไฟล์
+         [HttpPost]
+         
+    public async Task<IActionResult> Upload(IList<IFormFile> files) {
+        
+        string _hostingEnvironment = "/Users/bc-work/mywork/DBRegister";
+        string uploads = Path.Combine(_hostingEnvironment, "uploads");
+        Console.WriteLine(uploads);
+        foreach (IFormFile file in files) {
+            if (file.Length > 0) {
+                 uploads = "/Users/bc-work/mywork/DBRegister";
+                string filePath = Path.Combine(uploads, file.FileName);
+                using (Stream fileStream = new FileStream(filePath, FileMode.Create)) {
+                    await file.CopyToAsync(fileStream);
+                }
+            }
+        }
+        return Ok();
+    }
+
 
         [HttpDelete]
 
@@ -116,5 +143,7 @@ namespace DBRegister.Controllers
                 return BadRequest();
             }
         }
+        
     }
 }
+
