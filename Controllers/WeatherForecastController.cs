@@ -116,7 +116,7 @@ namespace DBRegister.Controllers
         Console.WriteLine(uploads);
         foreach (IFormFile file in files) {
             if (file.Length > 0) {
-                 uploads = "/Users/bc-work/mywork/DBRegister";
+                uploads = "/Users/bc-work/mywork/DBRegister";
                 string filePath = Path.Combine(uploads, file.FileName);
                 using (Stream fileStream = new FileStream(filePath, FileMode.Create)) {
                     await file.CopyToAsync(fileStream);
